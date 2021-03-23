@@ -15,6 +15,10 @@ public class MainController {
 
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody SubDTO dto){
+        if(!mainService.existUserAndCanal(dto.getIdUser(), dto.getIdCanal()))
+            return new ResponseEntity("no existe el user o el canal", HttpStatus.NOT_FOUND);
+        if(mainService.existsSub(dto.getIdUser(), dto.getIdCanal()))
+            return new ResponseEntity("ya estás suscrito", HttpStatus.BAD_REQUEST);
         mainService.createSub(dto.getIdUser(), dto.getIdCanal());
         return new ResponseEntity("te has suscrito", HttpStatus.OK);
     }

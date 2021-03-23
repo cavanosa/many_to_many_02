@@ -41,4 +41,14 @@ public class MainService {
         canal.getSubs().stream().forEach(s -> suscripcionRepository.delete(s));
         canalRepository.delete(canal);
     }
+
+    public boolean existUserAndCanal(int idUser, int idCanal){
+        return usuarioRepository.existsById(idUser) && canalRepository.existsById(idCanal);
+    }
+
+    public boolean existsSub(int idUser, int idCanal){
+        Usuario usuario = usuarioRepository.findById(idUser).get();
+        Canal canal = canalRepository.findById(idCanal).get();
+        return suscripcionRepository.existsByUsuarioAndCanal(usuario, canal);
+    }
 }
