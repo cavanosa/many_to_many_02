@@ -5,34 +5,28 @@ import javax.persistence.*;
 @Entity
 public class Suscripcion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private SuscripcionId suscripcionId;
 
     private int likes;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @MapsId("idUser")
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "canal_id")
+    @MapsId("idCanal")
     private Canal canal;
 
     public Suscripcion() {
     }
 
-    public Suscripcion(Usuario usuario, Canal canal) {
+    public Suscripcion(SuscripcionId suscripcionId, Usuario usuario, Canal canal) {
+        this.suscripcionId = suscripcionId;
         this.usuario = usuario;
         this.canal = canal;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getLikes() {
